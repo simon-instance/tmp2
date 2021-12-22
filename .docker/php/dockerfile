@@ -1,0 +1,30 @@
+FROM mcr.microsoft.com/mssql-tools as mssql
+FROM php:8.0.14-fpm-buster
+
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y gnupg neovim unixodbc-dev
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+# Add Microsoft repo for Microsoft ODBC Driver 17 for Linux
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
+    apt-transport-https \
+    msodbcsql17
+
+RUN mkdir -p /run/secrets
+COPY db_password /run/secrets/password_rdbms_app
+
+RUN pecl install sqlsrv pdo_sqlsrv \
+    && docker-php-ext-enable sqlsrv pdo_sqlsrv
+
+COPY .docker/php/installzsh.sh /usr/local/bin/installzsh
+RUN chmod +x /usr/local/bin/installzsh \
+    && installzsh
+
+WORKDIR /usr/src/app/website
+
+COPY ./ /usr/src/app/website
+
+EXPOSE 9000
+EXPOSE 80

@@ -1,0 +1,10 @@
+{
+    "name": "Beroepsproduct",
+    "dockerComposeFile": ["../docker-compose.dev.yml"],
+    "service": "php",
+    "settings": {
+        "terminal.integrated.shell.linux":  "/bin/zsh"
+    },
+    "workspaceFolder": "/usr/src/app/website",
+    "shutdownAction": "stopCompose"
+  }
