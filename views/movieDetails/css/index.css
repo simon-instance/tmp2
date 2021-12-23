@@ -1,0 +1,206 @@
+main {
+    margin: 40px 40px;
+    min-height: calc(80vh - 80px);
+}
+
+main > article:nth-child(1) {
+    grid-area: movieCover;
+    max-height: 60vh;
+    display: inline-block;
+    position: relative;
+}
+
+main > article:nth-child(1) > img {
+    height: calc(100% - 30px);
+    min-height: 335px;
+    max-width: 100%;
+    min-width: 50%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 25px;
+}
+
+main > article:nth-child(1) > a {
+    display: block;
+    position: absolute;
+    left: calc(50% - 41px + 7.5em);
+    top: 60%;
+    margin: auto;
+    width: 82px;
+    height: 70px;
+    filter: grayscale(.3);
+    transition: .2s ease all;
+}
+
+main > article:nth-child(1) > a:hover {
+    opacity: 1;
+    transform: scale(1.08);
+    filter: grayscale(0);
+}
+
+main > article:nth-child(1) > a > img {
+    width: inherit;
+    height: inherit;
+}
+
+main > article:nth-child(2) {
+    grid-area: movieResume;
+}
+
+main > article:nth-child(3) {
+    grid-area: movieDetails;
+}
+
+main > article:nth-child(4) {
+    grid-area: movieReviews;
+    overflow-y: auto;
+    max-height: calc(80vh);
+}
+
+main > article:nth-child(4) > div {
+    margin: 10%;
+    padding: 18px;
+    background:rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(100px);
+}
+
+main > article:nth-child(4) > div > h3 {
+    font-size: 1em;
+    color: #eee;
+    font-weight: bold;
+}
+main > article:nth-child(4) > div > p {
+    font-size: .95em;
+    color: #bebebe;
+}
+main > article:nth-child(4) > div > small {
+    font-size: .8em;
+    color: #eee;
+}
+
+main > article:nth-child(4)::-webkit-scrollbar {
+    width: 12px;  /* for vertical scrollbars */
+}
+    
+main > article:nth-child(4)::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+}
+    
+main > article:nth-child(4)::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+    border: 4.5px solid transparent;
+    background-clip: content-box;
+}
+
+main {
+    display: grid;
+    grid-template-rows: minmax(335px, auto) minmax(40%, auto);
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-areas: 
+        "movieCover movieCover movieDetails movieDetails movieDetails movieReviews movieReviews"
+        "movieResume movieResume movieDetails movieDetails movieDetails movieReviews movieReviews";
+    gap: 20px;
+}
+
+article:nth-child(2) > h2 {
+    color: white;
+    font-size: 1.5em;
+    margin: 15px 0 0 0;
+    letter-spacing: 1.4px;
+}
+
+article:nth-child(2) > h2#title {
+    font-size: 1.7em;
+    font-weight: bold;
+    margin: 0;
+    letter-spacing: 2.4px;
+}
+
+article:nth-child(2) > p {
+    font-size: 1.2em;
+}
+
+h1 {
+    color: white;
+    font-size: 1.7em;
+    letter-spacing: 2px;
+}
+p, article > ul > li {
+    color: #ddd;
+    margin: 5px 0 0 0;
+    font-size: 1.1em;
+    line-height: 20px;
+    letter-spacing: .8px;
+}
+p { font-size: 1.2em; }
+article:nth-child(2) > p, article > ul > li, h2 {
+    text-align: center;
+}
+article:nth-child(3) > p {
+    line-height: 25px;
+    letter-spacing: 1.5px;
+}
+
+
+@media only screen and (max-width: 1050px) {
+    main {
+        grid-template-rows: repeat(4, auto);
+        grid-template-columns: none;
+        grid-template-areas:
+            "movieCover"
+            "movieResume"
+            "movieDetails"
+            "movieReviews";
+
+        margin: 40px 15%;
+    }
+
+    main > article:nth-child(3) {
+        margin: 50px 10px 0px 10px;
+    }
+
+    main > article:nth-child(1) > a {
+        left: calc(50% - 41px + 10.5em);
+    }
+
+    main > article:nth-child(4) > div {
+        margin: 20px 10px;
+        padding: 18px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    main {
+        margin: 40px 25px;
+    }
+
+    main > article:nth-child(1) > img {
+        height: calc(100% - 80px);
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+        border-radius: 25px;
+    }
+    
+    main > article:nth-child(1) {
+        max-height: none;
+    }
+
+    main > article:nth-child(1) > a {
+        position: relative;
+        left: auto;
+        top: auto;
+        display: block;
+        margin: 10px auto 0 auto;
+    }
+
+    /* main > article:nth-child(1) > a {
+        position: relative;
+        top: 0;
+        left: 0;
+        display: inline-block;
+    } */
+}

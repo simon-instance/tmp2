@@ -1,0 +1,19 @@
+h1 {
+    font-size: 20px;
+}
+
+h1, b {
+    margin: 10px 0px 5px 0px;
+    display: block;
+}
+
+main {
+    display: flex;
+    align-items: center;
+}
+
+article {
+    position: relative;
+    max-width: 50%;
+    margin: auto;
+}

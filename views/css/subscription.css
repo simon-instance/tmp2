@@ -1,0 +1,71 @@
+main {
+    display: flex;
+    max-width: 70%;
+    margin: auto;
+    min-height: 75vh;
+    align-items: center;
+}
+
+article::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    border: 2px solid #ee1111;
+    border-width: 1px 0px 0px 1px;
+    border-radius: 20px 0 0 0;
+    top: 15px;
+    left: 15px;
+}
+
+article {
+    margin: 20px;
+    padding: 40px;
+    position: relative;
+    background: #252525;
+    border-radius: 10px;
+}
+
+button {
+    border-radius: 10px;
+    font-size: 18px;
+    margin: 10px 0 0 0;
+    padding: 5px 8px;
+    border: none;
+    font-weight: bold;
+    color: #eeeeee;
+    background: #11aa11;
+}
+
+.switchSub {
+    float: right;
+    background: #ee1111;
+    margin-left: 10px;
+}
+
+h1,p {
+    margin: 10px 0;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 0;
+    color: #dddddd;
+}
+
+@media only screen and (max-width: 825px) {
+    main {
+        max-width: 90%;
+        flex-wrap: wrap;
+    }
+    article {
+        min-width: 100px;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    main {
+        max-width: 90%;
+    }
+}
