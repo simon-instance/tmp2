@@ -4,10 +4,6 @@ namespace App\lib;
 class Router {
     public static $routes = [];
 
-    public function __get($prop) {
-        if($prop === "routes") return self::$routes;
-    }
-
     public static function get($url, $controllerData) {
         self::saveRoute($url, $controllerData);
         return new self();
