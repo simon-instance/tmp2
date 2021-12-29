@@ -1,0 +1,12 @@
+{
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": ".",
+            "App\\resources\\": "resources",
+            "App\\lib\\": "lib",
+            "App\\views\\": "views"
+        }
+    }
+}

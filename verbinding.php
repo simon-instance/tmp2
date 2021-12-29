@@ -1,4 +1,6 @@
 <?php
+namespace App\verkrijgVerbinding;
+
 die("yikes");
 require_once 'db.php';
 $wachtwoord= rtrim(file_get_contents('/run/secrets/password_rdbms_app', true));
@@ -16,6 +18,5 @@ $verbinding->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Functie om in andere files toegang te krijgen tot de verbinding.
 function verkrijgVerbinding() {
-  global $verbinding;
   return verbinding;
 } 
