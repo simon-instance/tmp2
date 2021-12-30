@@ -17,12 +17,38 @@ class Router {
         self::$routes[$key]["name"] = $routeName;
     }
 
+    private static function getUrlParams(String $url): array {
+        $matches;
+        preg_match_all("/\{[A-Za-z0-9]+\}/", $url, $matches, PREG_OFFSET_CAPTURE);
+
+        return $matches[0];
+    }
+
+    private static function getUrlMatchPattern(String $url): String {
+        $matchUri = str_replace("/", "\/", $url);
+        $matchPattern = "[A-Za-z0-9]+";
+        foreach(self::$routes[$url]["params"] as $key=>$param) {
+            $matchUri = str_replace($param[0], $matchPattern, $matchUri);
+        }
+        return $matchUri;
+    }
+
     private static function saveRoute($url = "", $controllerData = []) {
+        self::$routes[$url]["params"] = self::getUrlParams($url);
+        self::$routes[$url]["matchPattern"] = self::getUrlMatchPattern($url);
         self::$routes[$url]["class"] = "App\\resources\\controllers\\" . $controllerData[0];
         self::$routes[$url]["function"] = $controllerData[1];
     }
 
     public function execRoute(array $routeData) {
         (new $routeData["class"])->{$routeData["function"]}();
+    }
+
+    // url = key of route
+    public function atCurrentRoute($url, $route) {
+        $matches = [];
+        preg_match("/^{$route['matchPattern']}$/", $_SERVER["REQUEST_URI"], $matches);
+        if(count($matches) === 1) return true;
+        return false;
     }
 }

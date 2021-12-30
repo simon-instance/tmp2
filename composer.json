@@ -1,5 +1,6 @@
 {
     "require": {
+        "symfony/var-dumper": "^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -7,6 +8,9 @@
             "App\\resources\\": "resources",
             "App\\lib\\": "lib",
             "App\\views\\": "views"
-        }
+        },
+        "files": [
+            "lib/helpers/Database.php"
+        ]
     }
 }

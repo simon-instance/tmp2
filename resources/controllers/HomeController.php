@@ -1,6 +1,7 @@
 <?php
 
 namespace App\resources\controllers;
+use App\resources\models\User;
 
 class HomeController {
     public function index() {
@@ -9,5 +10,9 @@ class HomeController {
 
     public function secondIndex() {
         die("lol");
+    }
+
+    public function idtest() {
+        dd((new User)->all());
     }
 }

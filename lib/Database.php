@@ -3,25 +3,36 @@
 declare(strict_types=1);
 
 namespace App\lib;
+// We want to use Singleton for safety reasons (e.g we don't want more than 1 open database connection)
+use App\lib\traits\Singleton;
+use \PDO;
 
-define('DB_HOST', '172.30.0.2:1433');
+define('DB_LOGIN', 'SA');
+define('DB_HOST', 'beroepsproduct_db');
 define('DB_DATABASE', 'flatnix');
 
 class Database {
-    private $verbinding = PDO::class;
+    use Singleton;
 
-    public function __construct() {
-        $wachtwoord= rtrim(file_get_contents('/run/secrets/password_rdbms_app', true));
+    private static $verbinding = PDO::class;
+
+    public static function init() {
+        $wachtwoord = rtrim(file_get_contents('/run/secrets/password_rdbms_app', true));
         if (!$wachtwoord) {
             throw new RuntimeException('Kon een wachtwoordbestand voor SQL Server niet uitlezen. ');
         }
 
-        $this->verbinding = new PDO('sqlsrv:Server=' . DB_HOST . ';Database=' . DB_DATABASE . ';ConnectionPooling=0;', DB_LOGIN, $wachtwoord);
+        $driver_options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+        ];
+
+        self::$verbinding = new PDO('sqlsrv:Server=' . DB_HOST . ';Database=' . DB_DATABASE . ';ConnectionPooling=0;', DB_LOGIN, $wachtwoord, $driver_options);
         // Bewaar het wachtwoord niet langer onnodig in het geheugen van PHP.
         unset($wachtwoord);
-        // Zorg ervoor dat eventuele fouttoestanden ook echt als fouten (exceptions) gesignaleerd worden door PHP.
-        $this->verbinding->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
 
-        // Functie om in andere files toegang te krijgen tot de verbinding.
+    public function __get($prop) {
+        if($prop === "conn") return self::$verbinding;
     }
 }
