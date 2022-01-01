@@ -13,6 +13,17 @@ class HomeController {
     }
 
     public function idtest() {
-        dd((new User)->all());
+        dump(request());
+        $user = (new User)->create();
+        $user->subscriptionId = request()->id;
+        $user->name = "Timo";
+        $user->surname = "Van Elst";
+        $user->country = "Germany";
+        $user->birthyear = 1950;
+        $user->bankAccNo = "NL11INGB3534343510";
+        $user->username = "Yeet";
+        $user->password = "bamischijf";
+        $user->createdAt = 2022-01-01;
+        $user->save();
     }
 }

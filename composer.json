@@ -10,7 +10,8 @@
             "App\\views\\": "views"
         },
         "files": [
-            "lib/helpers/Database.php"
+            "lib/helpers/Database.php",
+            "lib/helpers/Router.php"
         ]
     }
 }

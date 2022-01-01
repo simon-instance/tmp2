@@ -3,6 +3,7 @@ namespace App\lib;
 
 class Router {
     public static $routes = [];
+    public static $requestData;
 
     public static function get($url, $controllerData) {
         self::saveRoute($url, $controllerData);
@@ -19,23 +20,28 @@ class Router {
 
     private static function getUrlParams(String $url): array {
         $matches;
-        preg_match_all("/\{[A-Za-z0-9]+\}/", $url, $matches, PREG_OFFSET_CAPTURE);
+        preg_match_all("/\{[A-Za-z0-9]+\}/", $url, $matches);
 
         return $matches[0];
     }
 
-    private static function getUrlMatchPattern(String $url): String {
+    private static function getUrlMatchPatterns(String $url): Array {
         $matchUri = str_replace("/", "\/", $url);
+        $matchUriParams = $matchUri;
         $matchPattern = "[A-Za-z0-9]+";
+        $paramsMatchPattern = "([A-Za-z0-9]+)";
         foreach(self::$routes[$url]["params"] as $key=>$param) {
-            $matchUri = str_replace($param[0], $matchPattern, $matchUri);
+            $matchUri = str_replace($param, $matchPattern, $matchUri);
+            $matchUriParams = str_replace($param, $paramsMatchPattern, $matchUriParams);
         }
-        return $matchUri;
+        return [$matchUri, $matchUriParams];
     }
 
     private static function saveRoute($url = "", $controllerData = []) {
         self::$routes[$url]["params"] = self::getUrlParams($url);
-        self::$routes[$url]["matchPattern"] = self::getUrlMatchPattern($url);
+        $matchPatterns = self::getUrlMatchPatterns($url);
+        self::$routes[$url]["matchPattern"] = $matchPatterns[0];
+        self::$routes[$url]["paramsMatchPattern"] = $matchPatterns[1];
         self::$routes[$url]["class"] = "App\\resources\\controllers\\" . $controllerData[0];
         self::$routes[$url]["function"] = $controllerData[1];
     }
@@ -48,7 +54,20 @@ class Router {
     public function atCurrentRoute($url, $route) {
         $matches = [];
         preg_match("/^{$route['matchPattern']}$/", $_SERVER["REQUEST_URI"], $matches);
-        if(count($matches) === 1) return true;
+
+        if(count($matches) === 1) {
+            $tmp = [];
+            preg_match("/{$route["paramsMatchPattern"]}/", $_SERVER["REQUEST_URI"], $tmp);
+            unset($tmp[0]);
+            $tmp = array_values($tmp);
+            foreach($route["params"] as $key=>$param) {
+                $newParams = preg_replace("/[{}]/", "", $route["params"]);
+                self::$requestData[$newParams[$key]] = $tmp[$key];
+            }
+            self::$requestData = (object)self::$requestData;
+
+            return true;
+        }
         return false;
     }
 }
