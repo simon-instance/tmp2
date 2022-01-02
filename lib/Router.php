@@ -6,7 +6,12 @@ class Router {
     public static $requestData;
 
     public static function get($url, $controllerData) {
-        self::saveRoute($url, $controllerData);
+        self::saveRoute($url, $controllerData, "GET");
+        return new self();
+    }
+
+    public static function post($url, $controllerData) {
+        self::saveRoute($url, $controllerData, "POST");
         return new self();
     }
 
@@ -37,13 +42,14 @@ class Router {
         return [$matchUri, $matchUriParams];
     }
 
-    private static function saveRoute($url = "", $controllerData = []) {
+    private static function saveRoute($url = "", $controllerData = [], $method = "get") {
         self::$routes[$url]["params"] = self::getUrlParams($url);
         $matchPatterns = self::getUrlMatchPatterns($url);
         self::$routes[$url]["matchPattern"] = $matchPatterns[0];
         self::$routes[$url]["paramsMatchPattern"] = $matchPatterns[1];
         self::$routes[$url]["class"] = "App\\resources\\controllers\\" . $controllerData[0];
         self::$routes[$url]["function"] = $controllerData[1];
+        self::$routes[$url]["method"] = $method;
     }
 
     public function execRoute(array $routeData) {
@@ -65,6 +71,8 @@ class Router {
                 self::$requestData[$newParams[$key]] = $tmp[$key];
             }
             self::$requestData = (object)self::$requestData;
+            if($route["method"] != $_SERVER["REQUEST_METHOD"])
+                throw new \Exception("Wrong request method, for this route you need the {$route['method']} method.");
 
             return true;
         }

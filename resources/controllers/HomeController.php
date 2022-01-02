@@ -12,8 +12,11 @@ class HomeController {
         die("lol");
     }
 
-    public function idtest() {
-        dump(request());
+    public function find() {
+        dump((new User)->findOne("userId", 2));
+    }
+
+    public function create() {
         $user = (new User)->create();
         $user->subscriptionId = request()->id;
         $user->name = "Timo";
@@ -25,5 +28,6 @@ class HomeController {
         $user->password = "bamischijf";
         $user->createdAt = 2022-01-01;
         $user->save();
+        dump("create");
     }
 }
