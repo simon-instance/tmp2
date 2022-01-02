@@ -5,7 +5,7 @@ use App\resources\models\User;
 
 class HomeController {
     public function index() {
-        die("test");
+        return view("index");
     }
 
     public function secondIndex() {
@@ -28,6 +28,5 @@ class HomeController {
         $user->password = "bamischijf";
         $user->createdAt = 2022-01-01;
         $user->save();
-        dump("create");
     }
 }

@@ -78,4 +78,14 @@ class Router {
         }
         return false;
     }
+
+    // public static function route($routeName = "") {
+    //     array_filter(array_keys(self::$routes), function($routeUrl) use($routeName) {
+    //         if($routeName == self::$routes[$routeUrl]["name"]) {
+    //             require_once __DIR__ . "/redirect.php";
+    //             return;
+    //         }
+    //     });
+    //     throw new \Exception("Couldn't find a route named {$routeName}");
+    // }
 }
