@@ -17,48 +17,26 @@
 <body>
     <?php require_once __DIR__ . "/inc/header.php"; ?>
     <main>
+        <?php foreach(session()->get("movies")??[] as $movie) { ?>
         <article>
             <div>
                 <a href="movieDetails/no_time_to_die.html">
-                    <h2>No Time To Die</h2>
-                    <p>Genre: Action</p> 
-                    <p>Duration: 1h 53m</p>
+                    <h2><?= $movie->title ?></h2>
+                    <p>Genre: <?= $movie->genre ?></p> 
+                    <p>Duration: <?= $movie->duration ?></p>
                     <span>
-                        Publicatiejaar: 2021 <br><br>
+                        Publicatiejaar: <?= $movie->releaseYear ?> <br><br>
                         Acteurs: <br>
-                        Daniel Craig
+                        <?php
+                            foreach($movie->movieActors??[] as $movieActor) {
+                                echo $movieActor->name . " " . $movieActor->surname;
+                            }
+                        ?>
                     </span>
                 </a>
             </div>
         </article>
-        <article>
-            <div>
-                <a href="#">
-                    <h2>No Time To Die</h2>
-                    <p>Genre: Action</p> 
-                    <p>Duration: 1h 53m</p>
-                    <span>
-                        Publicatiejaar: 2021 <br><br>
-                        Acteurs: <br>
-                        Daniel Craig
-                    </span>
-                </a>
-            </div>
-        </article>
-        <article>
-            <div>
-                <a href="#">
-                    <h2>No Time To Die</h2>
-                    <p>Genre: Action</p> 
-                    <p>Duration: 1h 53m</p>
-                    <span>
-                        Publicatiejaar: 2021 <br><br>
-                        Acteurs: <br>
-                        Daniel Craig
-                    </span>
-                </a>
-            </div>
-        </article>
+        <?php } ?>
     </main>
 </body>
 

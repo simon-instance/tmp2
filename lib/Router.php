@@ -61,7 +61,12 @@ class Router {
         $matches = [];
         preg_match("/^{$route['matchPattern']}$/", $_SERVER["REQUEST_URI"], $matches);
 
-        if(count($matches) === 1) {
+        if(in_array($url, array_keys(self::$routes)) && count($matches) === 1) {
+            if($route["method"] != $_SERVER["REQUEST_METHOD"])
+                throw new \Exception("Wrong request method, for this route you need the {$route['method']} method.");
+
+            return true;
+        } else if(!in_array($url, array_keys(self::$routes)) && count($matches) === 1) {
             $tmp = [];
             preg_match("/{$route["paramsMatchPattern"]}/", $_SERVER["REQUEST_URI"], $tmp);
             unset($tmp[0]);
@@ -71,21 +76,8 @@ class Router {
                 self::$requestData[$newParams[$key]] = $tmp[$key];
             }
             self::$requestData = (object)self::$requestData;
-            if($route["method"] != $_SERVER["REQUEST_METHOD"])
-                throw new \Exception("Wrong request method, for this route you need the {$route['method']} method.");
-
             return true;
         }
         return false;
     }
-
-    // public static function route($routeName = "") {
-    //     array_filter(array_keys(self::$routes), function($routeUrl) use($routeName) {
-    //         if($routeName == self::$routes[$routeUrl]["name"]) {
-    //             require_once __DIR__ . "/redirect.php";
-    //             return;
-    //         }
-    //     });
-    //     throw new \Exception("Couldn't find a route named {$routeName}");
-    // }
 }
