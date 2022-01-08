@@ -8,19 +8,19 @@
     <title>FletNix</title>
 
     <!-- Reset browser css -->
-    <link rel="stylesheet" href="/views//css/reset.css">
+    <link rel="stylesheet" href="/views/css/reset.css">
 
     <link rel="stylesheet" href="/views/css/index.css">
-    <link rel="stylesheet" href="/views/css/index.css">
+    <link rel="stylesheet" href="/views/movieDetails/css/index.css">
 </head>
 
 <body>
-    <?php echo __DIR__ ?>
+    <?php require_once __DIR__ . "/../inc/header.php" ?>
     <main>
         <article>
             <img src="/views/img/movie.jpg" alt="movie_cover">
             <a href="#">
-                <img src="/views/img/button.png" alt="playbutton">
+                <img src="/views/movieDetails/img/button.png" alt="playbutton">
             </a>
         </article>
         <article>

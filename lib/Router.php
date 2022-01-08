@@ -61,12 +61,12 @@ class Router {
         $matches = [];
         preg_match("/^{$route['matchPattern']}$/", $_SERVER["REQUEST_URI"], $matches);
 
-        if(in_array($url, array_keys(self::$routes)) && count($matches) === 1) {
+        if(in_array($_SERVER["REQUEST_URI"], array_keys(self::$routes)) && count($matches) === 1) {
             if($route["method"] != $_SERVER["REQUEST_METHOD"])
                 throw new \Exception("Wrong request method, for this route you need the {$route['method']} method.");
 
             return true;
-        } else if(!in_array($url, array_keys(self::$routes)) && count($matches) === 1) {
+        } else if(!in_array($_SERVER["REQUEST_URI"], array_keys(self::$routes)) && count($matches) === 1) {
             $tmp = [];
             preg_match("/{$route["paramsMatchPattern"]}/", $_SERVER["REQUEST_URI"], $tmp);
             unset($tmp[0]);

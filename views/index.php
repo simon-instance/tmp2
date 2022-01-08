@@ -17,13 +17,13 @@
 <body>
     <?php require_once __DIR__ . "/inc/header.php"; ?>
     <main>
-        <?php foreach(session()->get("movies")??[] as $movie) { ?>
+        <?php foreach(session()->get("movies")??[] as $key=>$movie) { ?>
         <article>
             <div>
-                <a href="movieDetails/no_time_to_die.html">
+                <a href="/movieDetails/<?= $key ?>">
                     <h2><?= $movie->title ?></h2>
                     <p>Genre: <?= $movie->genre ?></p> 
-                    <p>Duration: <?= $movie->duration ?></p>
+                    <p>Duration: <?= $movie->durationString ?></p>
                     <span>
                         Publicatiejaar: <?= $movie->releaseYear ?> <br><br>
                         Acteurs: <br>

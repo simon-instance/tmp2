@@ -37,6 +37,7 @@ CREATE TABLE users(
 CREATE TABLE movies(
     movieId         Int Identity(1,1),
     title           Varchar(200),
+    description     Text,
     genre           Varchar(50),
     duration        Time,
     releaseYear     Numeric(4),
@@ -56,6 +57,19 @@ CREATE TABLE movieActors(
                           References movies(movieId)
                             On Update Cascade
                             On Delete Cascade
+);
+
+CREATE TABLE movieDirectors(
+    directorId      Int Identity(1,1),
+    movieId         Int,
+
+    name            Varchar(100),
+    surname         Varchar(100),
+    Constraint PK_MOVIEDIRECTORS_directorId Primary Key(directorId),
+    Constraint FK_MOVIEDIRECTORS_movieId Foreign Key(movieId)
+                            References movies(movieId)
+                                On Update Cascade
+                                On Delete Cascade
 );
 
 CREATE TABLE movieReviews(

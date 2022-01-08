@@ -23,6 +23,22 @@ class HomeController {
 
         $movies = $movie->get();
         foreach($movies as $key=>$movie) {
+            $matches;
+            preg_match("/^(\d{2}):(\d{2})/", $movie->duration, $matches);
+
+            unset($matches[0]);
+            $matches = array_values($matches);
+            foreach($matches as $timeKey=>$match) {
+                $addon;
+                if($timeKey === 0) $addon = "h";
+                else if ($timeKey === 1) $addon = "m";
+                $matches[$timeKey] = ltrim($match, '0');
+                if($matches[$timeKey] !== "") $matches[$timeKey] .= $timeKey === 0 ? "h" : "m";
+            }
+
+            $matches = array_filter($matches, "strlen");
+            $movies[$key]->durationString = join(" ", $matches);
+
             $movieActors = json_decode($movie->movieActors);
             $movies[$key]->movieActors = $movieActors;
         }
