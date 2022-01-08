@@ -12,6 +12,8 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y \
     apt-transport-https \
     msodbcsql17
 
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 RUN mkdir -p /run/secrets
 COPY db_password /run/secrets/password_rdbms_app
 

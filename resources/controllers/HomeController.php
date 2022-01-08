@@ -3,6 +3,8 @@
 namespace App\resources\controllers;
 use App\resources\models\Movie;
 use App\resources\models\MovieActor;
+use App\resources\models\MovieDirector;
+use App\resources\models\MovieReview;
 
 class HomeController {
     public function index() {
@@ -10,6 +12,8 @@ class HomeController {
 
         $movieTable = Movie::$tableName;
         $movieActorTable = MovieActor::$tableName;
+        $movieDirectorTable = MovieDirector::$tableName;
+        $movieReviewTable = MovieReview::$tableName;
 
         $sql = "SELECT *, (
             SELECT REPLACE(
@@ -18,7 +22,24 @@ class HomeController {
                     WHERE M.movieId = MA.movieId FOR JSON AUTO
                 )
             , '{}', '')
-        ) as movieActors FROM {$movieTable} M";
+        ) as actors,
+        (
+            SELECT REPLACE(
+                (
+                    SELECT * FROM {$movieDirectorTable} MD
+                    WHERE M.movieId = MD.movieId FOR JSON AUTO
+                )
+            , '{}', '')
+        ) as directors,
+        (
+            SELECT REPLACE(
+                (
+                    SELECT * FROM {$movieReviewTable} MR
+                    WHERE M.movieId = MR.movieId FOR JSON AUTO
+                )
+            , '{}', '')
+        ) as reviews
+        FROM {$movieTable} M";
         $movie->query($sql);
 
         $movies = $movie->get();
@@ -39,8 +60,15 @@ class HomeController {
             $matches = array_filter($matches, "strlen");
             $movies[$key]->durationString = join(" ", $matches);
 
-            $movieActors = json_decode($movie->movieActors);
-            $movies[$key]->movieActors = $movieActors;
+            $actors = json_decode($movie->actors);
+            $movies[$key]->actors = $actors;
+            $directors = json_decode($movie->directors);
+            $movies[$key]->directors = $directors;
+
+            $reviews = json_decode($movie->reviews);
+            foreach($reviews as $key=>$review) {
+                dd(($review->rating + 2) / 2);
+            }
         }
 
         return view("index", ["movies" => $movies]);

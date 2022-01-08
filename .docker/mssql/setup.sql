@@ -80,7 +80,7 @@ CREATE TABLE movieReviews(
     rating          Numeric(2),
 
     Constraint PK_MOVIEREVIEWS_reviewId Primary Key(reviewId),
-    Constraint CK_MOVIEREVIEWS_rating Check(rating Between 0 And 9),
+    Constraint CK_MOVIEREVIEWS_rating Check(rating Between 0 And 10),
     Constraint FK_MOVIEREVIEWS_userId Foreign Key(userId)
                          References users(userId)
                            On Update Cascade
@@ -173,6 +173,6 @@ INSERT INTO movieReviews VALUES
     1,
     1, 
     'Very good movie!',
-    8
+    7
 );
 go

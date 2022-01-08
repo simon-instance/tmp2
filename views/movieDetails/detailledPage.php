@@ -1,3 +1,7 @@
+<?php
+    $movie = session()->get("movie");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,16 +32,18 @@
             <p>1h 53m</p>
             <h2>Actors:</h2>
             <ul>
-                <li>Daniel Craig</li>
+                <li><?= $movie->title ?></li>
             </ul>
             <h2>Directors:</h2> 
             <ul>
-                <li>Cary Fukunaga</li>
+            <?php foreach($movie->directors as $director) { ?>
+                <li><?= $director->name . " " . $director->surname ?></li>
+            <?php } ?>
             </ul>
         </article>
         <article>
             <h1>In short</h1>
-            <p>James Bond is enjoying a tranquil life in Jamaica after leaving active service. However, his peace is short-lived as his old CIA friend, Felix Leiter, shows up and asks for help. The mission to rescue a kidnapped scientist turns out to be far more treacherous than expected, leading Bond on the trail of a mysterious villain who's armed with a dangerous new technology.</p>
+            <p><?= $movie->description ?></p>
         </article>
         <article>
             <div>
