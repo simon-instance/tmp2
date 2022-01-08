@@ -2,6 +2,9 @@
     "name": "Beroepsproduct",
     "dockerComposeFile": ["../docker-compose.dev.yml"],
     "service": "php",
+    "extensions": [
+		"ms-mssql.mssql"
+	],
     "settings": {
         "terminal.integrated.shell.linux":  "/bin/zsh"
     },

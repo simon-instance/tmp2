@@ -23,7 +23,7 @@ CREATE TABLE users(
     bankAccNo       Varchar(18),
     username        Varchar(100),
     password        Varchar(256),
-    createdAt      Date Default Current_Timestamp,
+    createdAt       Date Default Current_Timestamp,
 
     Constraint PK_userId Primary Key(userId),
     Constraint FK_subscriptionId Foreign Key(subscriptionId)
@@ -77,10 +77,10 @@ CREATE TABLE movieReviews(
     userId          Int,
     movieId         Int,
     content         Varchar(512),
-    rating          Decimal(1,1),
+    rating          Numeric(2),
 
     Constraint PK_MOVIEREVIEWS_reviewId Primary Key(reviewId),
-    Constraint CK_MOVIEREVIEWS_rating Check(rating Between 1 And 5),
+    Constraint CK_MOVIEREVIEWS_rating Check(rating Between 0 And 9),
     Constraint FK_MOVIEREVIEWS_userId Foreign Key(userId)
                          References users(userId)
                            On Update Cascade
@@ -114,7 +114,7 @@ INSERT INTO movies VALUES
     '02:35',
     2021
 );
-goc
+go
 
 INSERT INTO movieActors VALUES
 (
@@ -163,7 +163,8 @@ INSERT INTO users VALUES
     2002,
     'NL11INGB0655555555',
     'simon',
-    'test'
+    'test',
+    '2022'
 );
 go
 
@@ -172,6 +173,6 @@ INSERT INTO movieReviews VALUES
     1,
     1, 
     'Very good movie!',
-    5
+    8
 );
 go
