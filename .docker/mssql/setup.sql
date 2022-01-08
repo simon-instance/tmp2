@@ -91,3 +91,82 @@ CREATE TABLE movieReviews(
                            On Delete Cascade
 );
 go
+
+INSERT INTO movies VALUES
+(
+    'James Bond',
+    'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam delectus quisquam, cupiditate dolorem animi facere sunt sit blanditiis, placeat asperiores, odio perferendis! Nemo assumenda facilis mollitia vero esse, cupiditate eos.',
+    'action',
+    '02:10',
+    1990
+),
+(
+    'Finding Nemo',
+    'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam delectus quisquam, cupiditate dolorem animi facere sunt sit blanditiis, placeat asperiores, odio perferendis! Nemo assumenda facilis mollitia vero esse, cupiditate eos.',
+    'animated',
+    '01:50',
+    2012
+),
+(
+    'Dune',
+    'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam delectus quisquam, cupiditate dolorem animi facere sunt sit blanditiis, placeat asperiores, odio perferendis! Nemo assumenda facilis mollitia vero esse, cupiditate eos.',
+    'scifi',
+    '02:35',
+    2021
+)
+
+INSERT INTO movieActors VALUES
+(
+    1,
+    'Daniel',
+    'Craig'
+), (
+    3,
+    'Jason',
+    'Momoa'
+);
+
+INSERT INTO movieDirectors VALUES
+(
+    1,
+    'Cary',
+    'Fukunaga'
+);
+
+INSERT INTO subscriptions VALUES
+(
+    'Cheap',
+    'You get access to all of our movies but none of the series.',
+    5.99
+),
+(
+    'Regular',
+    'You get access to all of our movies and non-premium series.',
+    8.99
+),
+(
+    'Premium',
+    'You get access to all of our movies and series',
+    11.99
+);
+
+INSERT INTO users VALUES 
+(
+    2,
+    'Simon',
+    'Peters',
+    'Netherlands',
+    2002,
+    'NL11INGB0655555555',
+    'simon',
+    'test'
+);
+
+
+INSERT INTO movieReviews VALUES
+(
+    1,
+    1, 
+    'Very good movie!',
+    5
+);
