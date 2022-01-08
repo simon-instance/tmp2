@@ -113,7 +113,8 @@ INSERT INTO movies VALUES
     'scifi',
     '02:35',
     2021
-)
+);
+goc
 
 INSERT INTO movieActors VALUES
 (
@@ -125,6 +126,7 @@ INSERT INTO movieActors VALUES
     'Jason',
     'Momoa'
 );
+go
 
 INSERT INTO movieDirectors VALUES
 (
@@ -132,6 +134,7 @@ INSERT INTO movieDirectors VALUES
     'Cary',
     'Fukunaga'
 );
+go
 
 INSERT INTO subscriptions VALUES
 (
@@ -149,6 +152,7 @@ INSERT INTO subscriptions VALUES
     'You get access to all of our movies and series',
     11.99
 );
+go
 
 INSERT INTO users VALUES 
 (
@@ -161,7 +165,7 @@ INSERT INTO users VALUES
     'simon',
     'test'
 );
-
+go
 
 INSERT INTO movieReviews VALUES
 (
@@ -170,3 +174,4 @@ INSERT INTO movieReviews VALUES
     'Very good movie!',
     5
 );
+go
