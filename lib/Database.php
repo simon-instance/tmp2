@@ -7,12 +7,12 @@ namespace App\lib;
 use App\lib\traits\Singleton;
 use \PDO;
 
-define('DB_LOGIN', 'applicatie');
-define('DB_HOST', 'beroepsproduct_db');
-define('DB_DATABASE', 'Movies');
-
 class Database {
     use Singleton;
+
+    const DB_LOGIN = "applicatie";
+    const DB_HOST = "beroepsproduct_db";
+    const DB_DATABASE = "Movies";
 
     private static $verbinding = PDO::class;
 
@@ -27,7 +27,7 @@ class Database {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
         ];
 
-        self::$verbinding = new PDO('sqlsrv:Server=' . DB_HOST . ';Database=' . DB_DATABASE . ';ConnectionPooling=0;', DB_LOGIN, $wachtwoord, $driver_options);
+        self::$verbinding = new PDO('sqlsrv:Server=' . self::DB_HOST . ';Database=' . self::DB_DATABASE . ';ConnectionPooling=0;', self::DB_LOGIN, $wachtwoord, $driver_options);
         // Bewaar het wachtwoord niet langer onnodig in het geheugen van PHP.
         unset($wachtwoord);
     }
