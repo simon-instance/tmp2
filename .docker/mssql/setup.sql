@@ -46,6 +46,29 @@ SET QUOTED_IDENTIFIER ON
 GO
 DROP TABLE IF EXISTS Person;
 GO
+-- CUSTOM --
+CREATE TABLE (
+    userId          Int Identity(1,1) NOT NULL,
+    subscriptionId  Int NOT NULL,
+    name            Varchar(100) NOT NULL,
+    surname         Varchar(100) NOT NULL,
+    country         Varchar(100) NOT NULL,
+    birthyear       Numeric(4) NOT NULL, 
+    bankAccNo       Varchar(18) NOT NULL,
+    username        Varchar(100) NOT NULL,
+    password        Varchar(256) NOT NULL,
+    createdAt       Date Default (Current_Timestamp) NOT NULL,
+
+    Constraint PK_userId Primary Key(userId),
+    Constraint FK_subscriptionId Foreign Key(subscriptionId)
+                                 References subscriptions(subscriptionId)
+                                    On Update Cascade
+                                    On Delete No Action,
+    Constraint CK_birthyear Check(birthyear <= (Current_Timestamp)),
+    Constraint CK_createdAt Check(createdAt <= (Current_Timestamp))
+)
+GO
+-- CUSTOM --
 CREATE TABLE Person(
 	person_id int NOT NULL,
 	lastname varchar(50) NOT NULL,
