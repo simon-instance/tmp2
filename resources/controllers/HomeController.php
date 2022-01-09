@@ -6,7 +6,16 @@ use App\lib\QueryBuilder;
 class HomeController {
     public function index() {
         $qb = new QueryBuilder();
-        $qb->query("");
+
+        $sql = "SELECT * FROM Movie M
+        LEFT JOIN Movie_Genre MG ON M.movie_id = MG.movie_id
+        LEFT JOIN Genre G ON MG.genre_name = G.genre_name
+        LEFT JOIN Movie_Director MD ON M.movie_id = MD.movie_id
+        LEFT JOIN Movie_Cast MC ON M.movie_id = MC.movie_id
+        LEFT JOIN Movie_Genre on 
+        LEFT JOIN Person P ON MD.person_id = P.Person_id
+        ";
+        $qb->query($sql);
 
         return view("index", ["movies" => $movies]);
     }
