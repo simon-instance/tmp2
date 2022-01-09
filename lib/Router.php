@@ -78,6 +78,17 @@ class Router {
             self::$requestData = (object)self::$requestData;
             return true;
         }
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            $reqData = (object)[
+                "POST" => []
+            ];
+            
+            foreach($_POST as $key=>$val) {
+                $reqData->POST[$key]  = $val;
+            }
+            $reqData->POST = (object)$reqData->POST;
+            self::$requestData = $reqData;
+        }
         return false;
     }
 }

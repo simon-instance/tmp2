@@ -28,15 +28,17 @@
             </a>
         </article>
         <article>
-            <h2 id="title">NO TIME TO DIE</h2>
-            <p>1h 53m</p>
+            <h2 id="title"><?= $movie->title ?></h2>
+            <p><?= $movie->durationString ?></p>
             <h2>Actors:</h2>
             <ul>
-                <li><?= $movie->title ?></li>
+            <?php foreach($movie->actors as $actor) { ?>
+                <li><?= $actor->name . " " . $actor->surname ?></li>
+            <?php } ?>
             </ul>
             <h2>Directors:</h2> 
             <ul>
-            <?php foreach($movie->directors as $director) { ?>
+            <?php foreach($movie->directors??[] as $director) { ?>
                 <li><?= $director->name . " " . $director->surname ?></li>
             <?php } ?>
             </ul>
@@ -46,26 +48,15 @@
             <p><?= $movie->description ?></p>
         </article>
         <article>
-            <div>
-                <h3>User123 Test</h3>
-                <small>6 years active on this platform</small>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ut obcaecati molestias, in iure vel, magnam, eum magni quod pariatur voluptate cum nostrum non fugit vitae deleniti corrupti delectus repellendus?</p>
-            </div>
-            <div>
-                <h3>User123</h3>
-                <small>6 years active on this platform</small>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ut obcaecati molestias, in iure vel, magnam, eum magni quod pariatur voluptate cum nostrum non fugit vitae deleniti corrupti delectus repellendus?</p>
-            </div>
-            <div>
-                <h3>User123</h3>
-                <small>6 years active on this platform</small>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ut obcaecati molestias, in iure vel, magnam, eum magni quod pariatur voluptate cum nostrum non fugit vitae deleniti corrupti delectus repellendus?</p>
-            </div>
-            <div>
-                <h3>User123</h3>
-                <small>6 years active on this platform</small>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ut obcaecati molestias, in iure vel, magnam, eum magni quod pariatur voluptate cum nostrum non fugit vitae deleniti corrupti delectus repellendus?</p>
-            </div>
+            <?php
+                foreach($movie->reviews as $review) {
+            ?>
+                <div>
+                    <h3><?= $review->user->name . " " . $review->user->surname ?></h3>
+                    <small>Active since <?= $review->user->createdAt ?></small>
+                    <p><?= $review->content ?></p>
+                </div>
+            <?php } ?>
         </article>
     </main>
 </body>

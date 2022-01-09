@@ -5,15 +5,16 @@ use App\resources\models\Movie;
 use App\resources\models\MovieActor;
 use App\resources\models\MovieDirector;
 use App\resources\models\MovieReview;
+use App\resources\models\User;
 
 class HomeController {
     public function index() {
         $movie = (new Movie);
 
-        $movieTable = Movie::$tableName;
-        $movieActorTable = MovieActor::$tableName;
-        $movieDirectorTable = MovieDirector::$tableName;
-        $movieReviewTable = MovieReview::$tableName;
+        $movieTable = Movie::TABLE_NAME;
+        $movieActorTable = MovieActor::TABLE_NAME;
+        $movieDirectorTable = MovieDirector::TABLE_NAME;
+        $movieReviewTable = MovieReview::TABLE_NAME;
 
         $sql = "SELECT *, (
             SELECT REPLACE(
@@ -32,24 +33,20 @@ class HomeController {
             , '{}', '')
         ) as directors,
         (
-            SELECT REPLACE(
-                (
-                    SELECT * FROM {$movieReviewTable} MR
-                    WHERE M.movieId = MR.movieId FOR JSON AUTO
-                )
-            , '{}', '')
+            SELECT * FROM {$movieReviewTable} MR
+            WHERE M.movieId = MR.movieId FOR JSON AUTO
         ) as reviews
         FROM {$movieTable} M";
         $movie->query($sql);
 
         $movies = $movie->get();
-        foreach($movies as $key=>$movie) {
+        foreach($movies??[] as $key=>$movie) {
             $matches;
             preg_match("/^(\d{2}):(\d{2})/", $movie->duration, $matches);
 
             unset($matches[0]);
             $matches = array_values($matches);
-            foreach($matches as $timeKey=>$match) {
+            foreach($matches??[] as $timeKey=>$match) {
                 $addon;
                 if($timeKey === 0) $addon = "h";
                 else if ($timeKey === 1) $addon = "m";
@@ -66,9 +63,13 @@ class HomeController {
             $movies[$key]->directors = $directors;
 
             $reviews = json_decode($movie->reviews);
-            foreach($reviews as $key=>$review) {
-                dd(($review->rating + 2) / 2);
+            $userTable = User::TABLE_NAME;
+            foreach($reviews??[] as $key=>$review) {
+                $user = (new User);
+                $user->query("SELECT U.name, U.surname, U.createdAt FROM {$userTable} U WHERE userId = {$review->userId}");
+                $reviews[$key]->user = $user->get()[0];
             }
+            $movies[$key]->reviews = $reviews;
         }
 
         return view("index", ["movies" => $movies]);

@@ -6,7 +6,7 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="index.html" tabindex="-1">Home</a>
+                            <a href="/" tabindex="-1">Home</a>
                         </li>
                         <li>
                             <a href="register.html" tabindex="-1">Register</a>

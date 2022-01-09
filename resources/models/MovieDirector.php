@@ -5,8 +5,8 @@ namespace App\resources\models;
 use App\lib\QueryBuilder;
 
 class MovieDirector extends QueryBuilder {
-    public static $tableName = "movieDirectors";
-    public static $columns = [
+    const TABLE_NAME = "movieDirectors";
+    const COLUMNS = [
         "movieId",
         "name",
         "surname"
