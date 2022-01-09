@@ -7,17 +7,18 @@ class HomeController {
     public function index() {
         $qb = new QueryBuilder();
 
-        $sql = "SELECT * FROM Movie M
-        LEFT JOIN Movie_Genre MG ON M.movie_id = MG.movie_id
-        LEFT JOIN Genre G ON MG.genre_name = G.genre_name
-        LEFT JOIN Movie_Director MD ON M.movie_id = MD.movie_id
-        LEFT JOIN Movie_Cast MC ON M.movie_id = MC.movie_id
-        LEFT JOIN Movie_Genre on 
-        LEFT JOIN Person P ON MD.person_id = P.Person_id
+        $sql = "SELECT *,
+        (SELECT genre_name FROM Movie_Genre MG WHERE MG.movie_id = M.movie_id FOR JSON AUTO) as genre_name,
+        (SELECT person_id FROM Movie_Cast MC WHERE MC.movie_id = M.movie_id FOR JSON AUTO) as movie_cast_person_ids,
+        (SELECT person_id FROM Movie_Director MD WHERE MD.movie_id = M.movie_id FOR JSON AUTO) as movie_director_person_ids
+        FROM Movie M
         ";
-        $qb->query($sql);
 
-        return view("index", ["movies" => $movies]);
+        $qb->query($sql);
+        $res = $qb->get();
+        dd($res);
+
+        return view("index", ["movies" => $res]);
     }
 
     public function secondIndex() {

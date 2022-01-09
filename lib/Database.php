@@ -7,9 +7,9 @@ namespace App\lib;
 use App\lib\traits\Singleton;
 use \PDO;
 
-define('DB_LOGIN', 'SA');
+define('DB_LOGIN', 'applicatie');
 define('DB_HOST', 'beroepsproduct_db');
-define('DB_DATABASE', 'flatnix');
+define('DB_DATABASE', 'Movies');
 
 class Database {
     use Singleton;
