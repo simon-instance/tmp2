@@ -10,9 +10,9 @@ use \PDO;
 class Database {
     use Singleton;
 
-    const DB_LOGIN = "applicatie";
-    const DB_HOST = "beroepsproduct_db";
-    const DB_DATABASE = "Movies";
+    private const DB_LOGIN = "applicatie";
+    private const DB_HOST = "beroepsproduct_db";
+    private const DB_DATABASE = "Movies";
 
     private static $verbinding = PDO::class;
 
