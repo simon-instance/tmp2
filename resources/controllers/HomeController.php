@@ -16,6 +16,12 @@ class HomeController {
 
         $qb->query($sql);
         $res = $qb->get();
+        foreach($res as $respart) {
+            $personCastIds = json_decode($respart->movie_cast_person_ids);
+            $personDirectorIds = json_decode($respart->movie_director_person_ids);
+
+            // foreach($personCastIds)
+        }
         dd($res);
 
         return view("index", ["movies" => $res]);
