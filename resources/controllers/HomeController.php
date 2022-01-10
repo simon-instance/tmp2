@@ -8,7 +8,7 @@ class HomeController {
         $qb = new QueryBuilder();
 
         $sql = "SELECT *,
-        (SELECT genre_name FROM Movie_Genre MG WHERE MG.movie_id = M.movie_id FOR JSON AUTO) as genre_name,
+        (SELECT genre_name FROM Movie_Genre MG WHERE MG.movie_id = M.movie_id FOR JSON AUTO) as genre_names,
         (SELECT person_id FROM Movie_Cast MC WHERE MC.movie_id = M.movie_id FOR JSON AUTO) as movie_cast_person_ids,
         (SELECT person_id FROM Movie_Director MD WHERE MD.movie_id = M.movie_id FOR JSON AUTO) as movie_director_person_ids
         FROM Movie M
@@ -16,13 +16,35 @@ class HomeController {
 
         $qb->query($sql);
         $res = $qb->get();
-        foreach($res as $respart) {
+        foreach($res as $reskey=>$respart) {
             $personCastIds = json_decode($respart->movie_cast_person_ids);
             $personDirectorIds = json_decode($respart->movie_director_person_ids);
+            $genres = json_decode($respart->genre_names);
 
-            // foreach($personCastIds)
+            $res[$reskey]->genres = [];
+            foreach($genres??[] as $genre) {
+                $res[$reskey]->genres[] = $genre->genre_name;
+            }
+            foreach($personCastIds??[] as $key=>$personCastId) {
+                $sql = "SELECT firstname, lastname FROM Person WHERE person_id = ?";
+                $personQb = new QueryBuilder();
+                $personQb->query($sql, [$personCastId->person_id]);
+                $person = $personQb->get();
+                $personCastIds[$key]->firstname = $person[0]->firstname;
+                $personCastIds[$key]->lastname = $person[0]->lastname;
+            }
+            foreach($personDirectorIds??[] as $key=>$personDirectorId) {
+                $sql = "SELECT firstname, lastname FROM Person WHERE person_id = ?";
+                $personQb = new QueryBuilder();
+                $personQb->query($sql, [$personDirectorId->person_id]);
+                $person = $personQb->get();
+                $personDirectorIds[$key]->firstname = $person[0]->firstname;
+                $personDirectorIds[$key]->lastname = $person[0]->lastname;
+            }
+
+            $res[$reskey]->movie_cast_person_ids = $personCastIds;
+            $res[$reskey]->movie_director_person_ids = $personDirectorIds;
         }
-        dd($res);
 
         return view("index", ["movies" => $res]);
     }

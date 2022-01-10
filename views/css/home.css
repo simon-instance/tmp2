@@ -16,7 +16,7 @@ p {
 h2, p { margin: 5px 0px; }
 
 article {
-    flex: 1;
+    flex: 0 0 calc(100%/3);
     height: 50vh; 
 }
 

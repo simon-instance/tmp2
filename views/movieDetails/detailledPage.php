@@ -29,17 +29,17 @@
         </article>
         <article>
             <h2 id="title"><?= $movie->title ?></h2>
-            <p><?= $movie->durationString ?></p>
+            <p><?= $movie->duration . "m" ?></p>
             <h2>Actors:</h2>
             <ul>
-            <?php foreach($movie->actors as $actor) { ?>
-                <li><?= $actor->name . " " . $actor->surname ?></li>
+            <?php foreach($movie->movie_cast_person_ids??[] as $actor) { ?>
+                <li><?= $actor->firstname . " " . $actor->lastname ?></li>
             <?php } ?>
             </ul>
             <h2>Directors:</h2> 
             <ul>
-            <?php foreach($movie->directors??[] as $director) { ?>
-                <li><?= $director->name . " " . $director->surname ?></li>
+            <?php foreach($movie->movie_director_person_ids??[] as $director) { ?>
+                <li><?= $director->firstname . " " . $director->lastname ?></li>
             <?php } ?>
             </ul>
         </article>
@@ -49,7 +49,7 @@
         </article>
         <article>
             <?php
-                foreach($movie->reviews as $review) {
+                foreach($movie->reviews??[] as $review) {
             ?>
                 <div>
                     <h3><?= $review->user->name . " " . $review->user->surname ?></h3>
