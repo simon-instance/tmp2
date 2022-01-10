@@ -25,7 +25,12 @@ CREATE TABLE [Subscription](
     monthlyPrice    Decimal(4,2) NOT NULL,
 
     Constraint PK_subscriptionId Primary Key(subscription_id)
-);
+)
+GO
+INSERT INTO [Subscription] VALUES
+('Starter', 'You get access to all of our movies but none of our series.', 5.99),
+('Advanced', 'You get access to all of our movies. You also get access to non-premium series.', 7.99),
+('Permium', 'You get access to all our content, including premium series.', 11.99)
 GO
 DROP TABLE IF EXISTS [User]
 GO
@@ -37,9 +42,10 @@ CREATE TABLE [User](
     country         Varchar(100) NOT NULL,
     birthyear       Numeric(4) NOT NULL,
     bankAccNo       Varchar(18) NOT NULL,
-    username        Varchar(100) NOT NULL,
+    username        Varchar(100) UNIQUE NOT NULL,
     password        Varchar(60) NOT NULL,
-    createdAt       Date Default (Current_Timestamp),
+	agreement		Bit NOT NULL,
+    createdAt       Date DEFAULT (GETDATE()),
 
     Constraint PK_userId Primary Key(user_id),
     Constraint FK_subscriptionId Foreign Key(subscription_id)

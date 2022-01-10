@@ -1,3 +1,7 @@
+<?php
+unset($_SESSION["user"]);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,14 +33,14 @@
                         Publicatiejaar: <?= $movie->publication_year ?> <br><br>
                         Acteurs: <br>
 
-                        <?php if(count($movie->movie_cast_person_ids??[]) > 5) { ?>
+                        <?php if(is_countable($movie->movie_cast_person_ids)){ if(count($movie->movie_cast_person_ids??[]) > 5) { ?>
                         <?php
                             for($i = 0; $i < 5; $i++) {
                         ?>
                         <?= $movie->movie_cast_person_ids[$i]->firstname . " " . $movie->movie_cast_person_ids[$i]->lastname ?> <br>
                         <?php } ?>
                             And <?= count($movie->movie_cast_person_ids) - 5 ?> more...
-                        <?php } ?>
+                        <?php }} ?>
                     </span>
                 </a>
             </div>

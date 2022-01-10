@@ -4,7 +4,7 @@ namespace App\lib;
 
 class SessionHandler {
     public function get($sessionVar) {
-        if(!isset($_SESSION[$sessionVar])) throw new \Exception("Session variable {$sessionVar} doesn't exist");
+        if(!isset($_SESSION[$sessionVar])) return null;
         return $_SESSION[$sessionVar];
     }
 

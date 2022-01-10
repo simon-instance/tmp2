@@ -9,13 +9,13 @@
                             <a href="/" tabindex="-1">Home</a>
                         </li>
                         <li>
-                            <a href="register.html" tabindex="-1">Register</a>
+                            <a href="/register" tabindex="-1">Register</a>
                         </li>
                         <li>
-                            <a href="about.html" tabindex="-1">About</a>
+                            <a href="/privacy" tabindex="-1">About</a>
                         </li>
                         <li>
-                            <a href="privacy.html" tabindex="-1">Privacy</a>
+                            <a href="/about" tabindex="-1">Privacy</a>
                         </li>
                     </ul>
                 </nav>
@@ -26,17 +26,16 @@
             <img src="/views/img/logo.png" width="170" alt="flatnix">
         </li>
         <li>
-
-            <div id="search">
+            <form id="search" method="POST" action="/filter">
                 <img src="/views/img/search.png" width="32" alt="search" tabindex="-1">
                 <div id="searchBox" tabindex="-1">
-                    <input type="text" id="searchBar" placeholder="Search" tabindex="1">
+                    <input type="text" id="searchBar" placeholder="Search" name="search" tabindex="1">
 
                     <label for="genre" id="genreTitle">Filter genres</label>
                     <input style="display:none" id="genre">
                     <div class="searchBox-group">
-                        <input id="romance" type="checkbox" name="Romance" tabindex="1">
-                        <label for="romance" class="searchBox-group-label">Romance</label>
+                        <input id="Action" type="checkbox" name="Action" tabindex="1">
+                        <label for="Action" class="searchBox-group-label">Action</label>
                     </div>
 
                     <div class="searchBox-group">
@@ -55,7 +54,8 @@
                     </div>
 
                 </div>
-            </div>
+                <input type="submit" style="display: none">
+            </form>
         </li>
     </ul>
 </header>

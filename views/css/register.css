@@ -48,6 +48,7 @@ select[class=formInput] {
 
 label[for=agreement] {
     font-family: arial;
+    float: left;
 }
 
 /* label[for=agreement] > a */

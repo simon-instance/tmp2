@@ -86,7 +86,7 @@ class Router {
             foreach($_POST as $key=>$val) {
                 $reqData->POST[$key]  = $val;
             }
-            $reqData->POST = (object)$reqData->POST;
+            $reqData->POST = $reqData->POST;
             self::$requestData = $reqData;
         }
         return false;

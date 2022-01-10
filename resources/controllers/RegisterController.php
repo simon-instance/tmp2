@@ -2,23 +2,46 @@
 
 namespace App\resources\controllers;
 
+use App\lib\QueryBuilder as qb;
+
 class RegisterController {
     public function show() {
         return view("register");
     }
 
     public function create() {
-        $req = request()->POST;
-        // $user = (new User)->create();
-        // $user->subscriptionId = ;
-        // $user->name = "Timo";
-        // $user->surname = "Van Elst";
-        // $user->country = "Germany";
-        // $user->birthyear = 1950;
-        // $user->bankAccNo = "NL11INGB3534343510";
-        // $user->username = "Yeet";
-        // $user->password = "bamischijf";
-        // $user->createdAt = 2022-01-01;
-        // $user->save();
+        $qb = new qb;
+        $postValues = request()->POST;
+        $insertValues = request()->POST;
+        $insertValues["password"] = password_hash($insertValues["password"], PASSWORD_DEFAULT);
+        unset($insertValues["confirmPassword"]);
+        $insertValues["agreement"] = $insertValues["agreement"] === "on" ? 1 : 0;
+        $unixtime = strtotime($insertValues["birthyear"]);
+        $insertValues["birthyear"] = date("Y", $unixtime);
+
+        if(count($insertValues) != 9) {
+            session()->set("message", [
+                "type" => "Error",
+                "data" => "Registration failed, some fields were incorrect.",
+                "color" => "rgb(255,190,200)"
+            ]);
+        } else {
+            // -1 = password confirmation
+            $placeholders = substr(str_repeat("?, ", count($postValues) - 1), 0, -2);
+            ;$sql = "INSERT INTO [User](firstname, lastname, country, birthyear, bankAccNo, username, password, subscription_id, agreement)
+            OUTPUT Inserted.user_id, Inserted.username, Inserted.subscription_id
+            VALUES ({$placeholders})";
+            $values = array_values($insertValues);
+            $values[7] = (int)$values[7];
+            $qb->query($sql, $values);
+
+            session()->set("message", [
+                "type" => "Success",
+                "data" => "You have succesfully registered and are now logged in.",
+                "color" => "rgb(190,255,200)"
+            ]);
+            session()->set("user", $qb->get()[0]??null);
+        }
+        return view("register");
     }
 }
