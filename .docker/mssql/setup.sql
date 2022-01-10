@@ -15,6 +15,42 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+DROP TABLE IF EXISTS [Subscription]
+GO
+CREATE TABLE [Subscription](
+    subscription_id Int Identity(1,1) NOT NULL,
+    name            Varchar(50) NOT NULL,
+    description     Varchar(500) NOT NULL,
+    monthlyPrice    Decimal(4,2) NOT NULL,
+
+    Constraint PK_subscriptionId Primary Key(subscription_id)
+);
+GO
+DROP TABLE IF EXISTS [User]
+GO
+CREATE TABLE [User](
+    user_id         Int Identity(1,1) NOT NULL,
+    subscription_id Int NOT NULL,
+    firstname       Varchar(100) NOT NULL,
+    lastname       	Varchar(100) NOT NULL,
+    country         Varchar(100) NOT NULL,
+    birthyear       Numeric(4) NOT NULL,
+    bankAccNo       Varchar(18) NOT NULL,
+    username        Varchar(100) NOT NULL,
+    password        Varchar(60) NOT NULL,
+    createdAt       Date Default (Current_Timestamp),
+
+    Constraint PK_userId Primary Key(user_id),
+    Constraint FK_subscriptionId Foreign Key(subscription_id)
+                                 References Subscription(subscription_id)
+                                    On Update No Action
+                                    On Delete No Action,
+    Constraint CK_birthyear Check(birthyear <= Current_Timestamp),
+    Constraint CK_createdAt Check(createdAt <= Current_Timestamp)
+);
+GO
+
 DROP TABLE IF EXISTS Movie
 GO
 CREATE TABLE Movie (
