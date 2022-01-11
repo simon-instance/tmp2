@@ -45,10 +45,17 @@
 
                     <label for="genre" id="genreTitle">Filter genres</label>
                     <input style="display:none" id="genre">
+                    <?php
+                    $sql = "SELECT genre_name FROM Genre";
+                    $stmt = conn()->prepare($sql);
+                    $stmt->execute();
+                    $genres = $stmt->fetchAll();
+                    foreach($genres??[] as $genre) { ?>
                     <div class="searchBox-group">
-                        <input id="Action" type="checkbox" name="Action" tabindex="1">
-                        <label for="Action" class="searchBox-group-label">Action</label>
+                        <input id="<?= $genre->genre_name ?>" type="checkbox" name="<?= $genre->genre_name ?>" tabindex="1">
+                        <label for="<?= $genre->genre_name ?>" class="searchBox-group-label"><?= $genre->genre_name ?></label>
                     </div>
+                    <?php } ?>
 
                     <div class="searchBox-group">
                         <input type="checkbox" name="police" id="police" tabindex="1">

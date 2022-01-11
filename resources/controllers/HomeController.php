@@ -54,7 +54,6 @@ class HomeController {
     public function applyFilter() {
         $this->filterGenres = true;
         $searchGenres = $this->getGenres(request()->POST);
-
         $qb = new qb();
 
         $sql = "SELECT *,
@@ -75,8 +74,10 @@ class HomeController {
             foreach($genres??[] as $genre) {
                 $res[$reskey]->genres[] = $genre->genre_name;
             }
-            if(empty(array_intersect($res[$reskey]->genres??[], $searchGenres??[]))) {
+            if(!array_diff($searchGenres??[], $res[$reskey]->genres??[]) == false) {
                 unset($res[$reskey]);
+                continue;
+                // continue makes the code faster
             }
             foreach($personCastIds??[] as $key=>$personCastId) {
                 $sql = "SELECT firstname, lastname FROM Person WHERE person_id = ?";
@@ -95,18 +96,23 @@ class HomeController {
                 $personDirectorIds[$key]->lastname = $person[0]->lastname;
             }
             
-            $res[$reskey]->movie_cast_person_ids = $personCastIds;
-            $res[$reskey]->movie_director_person_ids = $personDirectorIds;
-        }
-
-        $selectedGenres = [];
-        foreach(request()->POST as $key=>$postval) {
-            if($key !== "search") {
-                $selectedGenres[] = $postval;
+            if(isset($res[$reskey]->movie_cast_person_ids)) {
+                $res[$reskey]->movie_cast_person_ids = $personCastIds;
+            }
+            if(isset($res[$reskey]->movie_director_person_ids)) {
+                $res[$reskey]->movie_director_person_ids = $personDirectorIds;
             }
         }
 
-        return view("index", ["movies" => $res]);
+        // $selectedGenres = [];
+        // foreach(request()->POST as $key=>$postval) {
+        //     if($key !== "search") {
+        //         $selectedGenres[] = $postval;
+        //     }
+        // }
+        session()->set("movies", $res);
+
+        return view("index");
     }
     
     public function getGenres(array $genres = []) {
