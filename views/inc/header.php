@@ -1,6 +1,6 @@
 <header>
     <ul id="navList">
-        <li>
+        <li class="normal">
             <img id="hamburger" src="/views/img/hamburger.png" width="40" alt="menu" tabindex="-1">
             <div id="menu" tabindex="-1">
                 <nav>
@@ -10,6 +10,9 @@
                         </li>
                         <li>
                             <a href="/register" tabindex="-1">Register</a>
+                        </li>
+                        <li>
+                            <a href="/login" tabindex="-1">Login</a>
                         </li>
                         <li>
                             <a href="/privacy" tabindex="-1">About</a>
@@ -22,10 +25,19 @@
             </div>
             <div id="cancelMenu" tabindex="-1"></div>
         </li>
-        <li>
+        <li class="logo">
             <img src="/views/img/logo.png" width="170" alt="flatnix">
         </li>
-        <li>
+        <?php
+        if(session()->get("user") != null){
+        ?>
+        <li class="username">
+            <p style="font-family: arial; font-size: 1.3em; white-space: nowrap; margin-left: 20px">
+                Welkom, <?= session()->get("user")->username ?>
+            </p>   
+        </li>
+        <?php } ?>
+        <li class="normal">
             <form id="search" method="POST" action="/filter">
                 <img src="/views/img/search.png" width="32" alt="search" tabindex="-1">
                 <div id="searchBox" tabindex="-1">

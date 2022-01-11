@@ -82,7 +82,7 @@ article > div > a > span {
 }
 
 article > div:hover a > span {
-    max-height: 40%;
+    max-height: 50%;
     opacity: 1;
 }
 

@@ -38,7 +38,14 @@ header {
     display: flex;
 }
 
-#navList > li:nth-child(1), #navList > li:nth-child(3) {
+#navList > .normal {
+    flex: 100;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#navList > .username, #navList > .logo {
     flex: 1;
     display: flex;
     align-items: center;
