@@ -28,5 +28,7 @@ WORKDIR /usr/src/app/website
 
 COPY ./ /usr/src/app/website
 
+RUN composer install
+
 EXPOSE 9000
 EXPOSE 80
