@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/mssql-tools as mssql
 FROM php:7.4-fpm-buster
 
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y gnupg neovim unixodbc-dev
+RUN apt-get install -y gnupg vim unixodbc-dev
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
