@@ -1,5 +1,5 @@
 {
-    "name": "Beroepsproduct",
+    "name": "IProject",
     "dockerComposeFile": ["../docker-compose.dev.yml"],
     "service": "php",
     "extensions": [
@@ -9,5 +9,4 @@
         "terminal.integrated.shell.linux":  "/bin/zsh"
     },
     "workspaceFolder": "/usr/src/app/website",
-    "shutdownAction": "stopCompose"
   }
